@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROTOS AI: System VIP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --vavada-purple: #2b1254;
+            --vavada-dark: #1a0a33;
+            --vavada-red: #e60045;
+            --vavada-gold: #ffcc00;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--vavada-dark);
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header & Logo Section */
+        header {
+            padding: 20px;
+            background: linear-gradient(180deg, var(--vavada-purple) 0%, var(--vavada-dark) 100%);
+        }
+
+        .flag { width: 30px; margin-bottom: 10px; }
+
+        /* Main Screen */
+        .hero-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            margin-top: 30px;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            color: #ccc;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+
+        .stats-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--vavada-purple);
+            margin: 20px 0;
+        }
+
+        .main-btn {
+            background: linear-gradient(180deg, #ff0055 0%, #b3003b 100%);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(230, 0, 69, 0.5);
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .main-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(230, 0, 69, 0.8);
+        }
+
+        /* Winners Section */
+        .winners-section {
+            margin-top: 50px;
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-top: 2px solid var(--vavada-purple);
+        }
+
+        .winner-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .winner-amount { color: var(--vavada-gold); font-weight: bold; }
+
+        /* Overlay & Modals */
+        .step-content { display: none; padding: 20px; }
+        .active { display: block !important; }
+
+        input[type="text"], input[type="file"] {
+            width: 80%;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border: none;
+        }
+
+        /* Games Grid */
+        .games-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .game-card {
+            background: var(--vavada-purple);
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        /* Chat */
+        #chat-box {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 200px;
+            background: rgba(0,0,0,0.8);
+            font-size: 12px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="step1" class="step-content active">
+        <img src="https://upload.wikimedia.org/wikipedia/en/1/12/Flag_of_Poland.svg" class="flag" alt="PL">
+        <div class="hero-title">🤖 PROTOS AI v4.2: Połączenie nawiązane.</div>
+        <div class="hero-description">
+            Nasz system analizuje luki w algorytmach kasynowych przy użyciu sieci neuronowych. 
+            W tej chwili monitorujemy ponad 140 systemów, aby dostarczyć Ci prognozy o najwyższym prawdopodobieństwie wygranej.
+        </div>
+        <div class="stats-box">
+            📊 <b>Status:</b> Aktywny <br>
+            🎯 <b>Skuteczność:</b> 94.8% <br>
+            👥 <b>Miejsca:</b> 7/100
+        </div>
+        <p>Dzięki PROTOS AI nie grasz przeciwko kasynu — grasz z matematyczną przewagą.</p>
+        <button class="main-btn" onclick="nextStep(2)">DOŁĄCZ DO ZESPOŁU</button>
+
+        <div class="winners-section">
+            <h3>🏆 Zwycięzcy naszej drużyny</h3>
+            <div class="winner-item"><span>Marek K.</span> <span class="winner-amount">12,400 PLN</span></div>
+            <div class="winner-item"><span>Adam Z.</span> <span class="winner-amount">8,750 PLN</span></div>
+            <div class="winner-item"><span>Piotr W.</span> <span class="winner-amount">15,200 PLN</span></div>
+        </div>
+    </div>
+
+    <div id="step2" class="step-content">
+        <h2>⚠️ Konto nieaktywne!</h2>
+        <p>Aby AI zaczęło generować sygnały dla Twojego ID, musisz:</p>
+        <p>1. <b>Zarejestrować się</b> przez przycisk poniżej.<br>
+           2. <b>Zasilić saldo (min. 75 PLN)</b>, aby aktywować algorytm.</p>
+        <button class="main-btn" onclick="window.open('ТВОЯ_ССЫЛКА_ТУТ')">🔗 REJESTRACJA (PROTOS AI)</button>
+        <br><br>
+        <input type="text" id="userID" placeholder="Wpisz swoje ID (zaczyna się od 153...)">
+        <button class="main-btn" style="font-size: 14px; padding: 10px;" onclick="validateID()">DALEJ</button>
+    </div>
+
+    <div id="step3" class="step-content">
+        <h2>Potwierdź depozyt</h2>
+        <p>Prześlij zrzut ekranu (screenshot) swojego salda (min. 75 PLN), aby system AI mógł zweryfikować połączenie.</p>
+        <input type="file" id="screenshot" accept="image/*">
+        <button class="main-btn" onclick="validateScreen()">WERYFIKUJ</button>
+    </div>
+
+    <div id="step4" class="step-content">
+        <h2>Wybierz grę do analizy:</h2>
+        <div class="games-grid">
+            <div class="game-card" onclick="getSignal('Aviator')">✈️ Aviator</div>
+            <div class="game-card" onclick="getSignal('Mines')">💣 Mines</div>
+            <div class="game-card" onclick="getSignal('Penalty')">⚽ Penalty</div>
+            <div class="game-card" onclick="getSignal('Chicken Road')">🐥 Chicken</div>
+        </div>
+        <div id="signal-display" style="margin-top: 20px; font-weight: bold; color: var(--vavada-gold); font-size: 24px;"></div>
+        
+        <div id="chat-box">
+            <b>Czat na żywo:</b>
+            <div id="messages"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function nextStep(step) {
+        document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
+        document.getElementById('step' + step).classList.add('active');
+    }
+
+    function validateID() {
+        const id = document.getElementById('userID').value;
+        if (id.startsWith('153')) {
+            nextStep(3);
+        } else {
+            alert('Błąd! Twoje ID musi zaczynać się od 153. Sprawdź i spróbuj ponownie.');
+        }
+    }
+
+    function validateScreen() {
+        const file = document.getElementById('screenshot').files[0];
+        if (file) {
+            alert('Weryfikacja obrazu... System wykrył saldo powyżej 75 PLN.');
+            nextStep(4);
+            startChat();
+        } else {
+            alert('Proszę załączyć zrzut ekranu.');
+        }
+    }
+
+    function getSignal(game) {
+        const display = document.getElementById('signal-display');
+        display.innerHTML = "Analiza systemu...";
+        setTimeout(() => {
+            const coef = (Math.random() * (1.5 - 1.1) + 1.1).toFixed(2);
+            display.innerHTML = `PROGNOZA ${game}: <br> Celuj w x${coef}`;
+        }, 1500);
+    }
+
+    function startChat() {
+        const msgs = ["Działa! x1.3 wpadło", "PROTOS jest niesamowity", "U mnie też prognozy wchodzą", "Cierpliwości, u mnie zadziałało po 2 min"];
+        const box = document.getElementById('messages');
+        setInterval(() => {
+            const m = msgs[Math.floor(Math.random() * msgs.length)];
+            const div = document.createElement('div');
+            div.innerHTML = `> ${m}`;
+            box.prepend(div);
+        }, 5000);
+    }
+</script>
+
+</body>
+</html>
