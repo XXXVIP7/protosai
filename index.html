@@ -19,6 +19,7 @@
             background: radial-gradient(circle at top, #1e0b3d 0%, #0f051d 100%);
             color: white;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container { max-width: 900px; margin: 0 auto; padding: 20px; }
@@ -31,14 +32,14 @@
             padding: 15px 0;
         }
 
-        .logo { font-weight: 900; font-size: 24px; }
+        .logo { font-weight: 900; font-size: 24px; letter-spacing: -1px; }
         .logo span { color: var(--vavada-pink); }
 
         .flag-gif {
-            width: 70px;
+            width: 60px;
             height: auto;
             border-radius: 4px;
-            box-shadow: 0 0 15px rgba(255,255,255,0.2);
+            box-shadow: 0 0 10px rgba(255,255,255,0.2);
         }
 
         /* --- STEPS --- */
@@ -50,7 +51,7 @@
         .games-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 15px;
             margin-top: 25px;
         }
         .game-item {
@@ -59,23 +60,23 @@
             overflow: hidden;
             cursor: pointer;
             transition: 0.3s;
-            max-width: 200px; /* Уменьшил размер */
+            max-width: 220px;
             margin: 0 auto;
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        .game-item:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--vavada-pink); }
+        .game-item:hover { transform: scale(1.05); border-color: var(--vavada-pink); }
         .game-item img { 
             width: 100%; 
             height: 140px; 
-            object-fit: cover; 
-            image-rendering: -webkit-optimize-contrast; /* Улучшение четкости */
+            object-fit: cover;
         }
-        .game-name { padding: 10px; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; }
+        .game-name { padding: 10px; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; }
 
         /* --- WINNERS --- */
         .winner-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
             margin-top: 20px;
             text-align: left;
         }
@@ -86,9 +87,11 @@
             background: rgba(255,255,255,0.05);
             padding: 10px;
             border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
-        .winner-card img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc; }
-        .winner-card b { color: var(--vavada-gold); }
+        .winner-card img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--vavada-pink); background: #333; }
+        .winner-card b { color: var(--vavada-gold); font-size: 1.1rem; }
+        .winner-card small { color: #888; }
 
         /* --- UI ELEMENTS --- */
         .btn-main {
@@ -97,31 +100,47 @@
             padding: 18px 40px;
             color: white;
             font-weight: 900;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             text-transform: uppercase;
             box-shadow: 0 5px 15px rgba(255, 45, 112, 0.4);
+            transition: 0.3s;
+        }
+        .btn-main:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+        .btn-back {
+            background: transparent;
+            border: 1px solid #555;
+            color: #888;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
         }
 
         input {
             background: #222;
             border: 1px solid #444;
-            padding: 12px;
+            padding: 15px;
             color: white;
-            border-radius: 8px;
+            border-radius: 10px;
             margin-bottom: 15px;
             text-align: center;
+            width: 80%;
+            max-width: 300px;
         }
 
         /* --- FOOTER --- */
-        footer { margin-top: 60px; padding: 40px 0; border-top: 1px solid #222; text-align: center; }
-        .pay-logos { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; }
-        .pay-logos img { height: 25px; opacity: 0.8; }
-        .copy { font-size: 0.75rem; color: #666; line-height: 1.5; }
+        footer { margin-top: 60px; padding: 40px 20px; border-top: 1px solid #222; text-align: center; }
+        .pay-logos { display: flex; justify-content: center; gap: 25px; margin-bottom: 25px; flex-wrap: wrap; }
+        .pay-logos img { height: 22px; filter: grayscale(1) invert(1); opacity: 0.7; }
+        .copy { font-size: 0.75rem; color: #777; line-height: 1.6; max-width: 600px; margin: 0 auto; }
 
         /* --- CHAT --- */
-        #chat-btn { position: fixed; bottom: 20px; right: 20px; width: 55px; height: 55px; background: var(--vavada-pink); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 999; }
-        #chat-win { position: fixed; bottom: 85px; right: 20px; width: 280px; height: 350px; background: #111; border-radius: 12px; border: 1px solid #333; display: none; flex-direction: column; z-index: 999; }
+        #chat-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: var(--vavada-pink); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        #chat-win { position: fixed; bottom: 90px; right: 20px; width: 300px; height: 400px; background: #0f0f0f; border-radius: 15px; border: 1px solid #333; display: none; flex-direction: column; z-index: 1000; overflow: hidden; }
+        .chat-header { background: var(--vavada-purple); padding: 12px 15px; font-weight: 800; display: flex; justify-content: space-between; align-items: center; }
+        #msgBox { flex: 1; padding: 15px; overflow-y: auto; font-size: 0.8rem; background: #0a0a0a; }
     </style>
 </head>
 <body>
@@ -134,148 +153,23 @@
 
     <div id="step1" class="step-content active">
         <h1 style="font-size: 2.2rem; margin-bottom: 0;">🤖 <b>PROTOS AI v4.2</b></h1>
-        <p style="opacity: 0.8; font-size: 0.9rem;">Nasz system analizuje luki w algorytmach kasynowych przy użyciu sieci neuronowych.</p>
+        <p style="opacity: 0.8; font-size: 0.95rem;">System VIP do analizy algorytmów w czasie rzeczywistym.</p>
         <br>
         <button class="btn-main" onclick="goToStep(2)">Dołącz do zespołu</button>
 
-        <div style="margin-top: 40px;">
-            <h3 style="text-align: left; font-size: 1rem;">🏆 Zwycięzcy naszej drużyny:</h3>
+        <div style="margin-top: 50px;">
+            <h3 style="text-align: left; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px;">🏆 Zwycięzcy naszej drużyny:</h3>
             <div class="winner-grid">
-                <div class="winner-card"><img src="https://images.generated.photos/7_hT_N89I4x29y0Xq_N2V9yXvG-5-v0A/rs:fit:256:256/czM6Ly9pY29uczgu/Z2VuZXJhdGVkLXBo/b3Rvcy92My8wMjU2/NDY4LmpwZw.jpg"><div><small>ID: 153**112</small><br><b>14,400 PLN</b></div></div>
-                <div class="winner-card"><img src="https://images.generated.photos/M2v5Xq3Z0fA.jpg"><div><small>ID: 154**098</small><br><b>8,150 PLN</b></div></div>
-                <div class="winner-card"><img src="https://images.generated.photos/M2v5Xq4Z0fA.jpg"><div><small>ID: 155**443</small><br><b>22,900 PLN</b></div></div>
-                <div class="winner-card"><img src="https://images.generated.photos/M2v5Xq5Z0fA.jpg"><div><small>ID: 153**761</small><br><b>5,200 PLN</b></div></div>
-                <div class="winner-card"><img src="https://images.generated.photos/M2v5Xq6Z0fA.jpg"><div><small>ID: 154**332</small><br><b>11,000 PLN</b></div></div>
-                <div class="winner-card"><img src="https://images.generated.photos/M2v5Xq7Z0fA.jpg"><div><small>ID: 155**901</small><br><b>34,600 PLN</b></div></div>
+                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=152"><div><small>ID: 152**881</small><br><b>14,400 PLN</b></div></div>
+                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=153"><div><small>ID: 153**092</small><br><b>8,150 PLN</b></div></div>
+                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=154"><div><small>ID: 154**443</small><br><b>22,900 PLN</b></div></div>
+                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=155"><div><small>ID: 155**761</small><br><b>5,200 PLN</b></div></div>
+                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=156"><div><small>ID: 156**332</small><br><b>11,000 PLN</b></div></div>
+                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=1522"><div><small>ID: 152**901</small><br><b>34,600 PLN</b></div></div>
             </div>
         </div>
     </div>
 
     <div id="step2" class="step-content">
         <h2 style="color: var(--vavada-pink);">⚠️ Konto nieaktywne!</h2>
-        <p style="font-size: 0.9rem;">Aby aktywować algorytm, zarejestruj się i wpisz swoje ID poniżej.</p>
-        <button class="btn-main" style="background: #333; font-size: 0.9rem;" onclick="window.open('https://vavada.com/pl/')">🔗 REJESTRACJA</button>
-        <div style="margin-top: 30px;">
-            <input type="text" id="idVal" placeholder="Wpisz ID Gracza" maxlength="10">
-            <br>
-            <button class="btn-main" onclick="validateID()">DALEJ</button>
-        </div>
-    </div>
-
-    <div id="step3" class="step-content">
-        <h2>📊 AI Skaner Balansu</h2>
-        <p style="font-size: 0.85rem;">Prześlij zrzut ekranu swojego salda.<br>System musi wykryć minimum <b>75 PLN</b>.</p>
-        <input type="file" id="screenshotInput" accept="image/*">
-        <div id="scanStatus" style="font-size: 0.8rem; color: var(--vavada-gold); margin: 10px 0;"></div>
-        <button class="btn-main" onclick="startAIScan()">Skanuj i Aktywuj</button>
-    </div>
-
-    <div id="step4" class="step-content">
-        <h2 style="font-size: 1.2rem;">🚀 Wybierz grę do analizy</h2>
-        <div class="games-grid">
-            <div class="game-item" onclick="showSignal('Aviator')"><img src="https://img-a.vavada-cdn.net/MQqyzUi16QUy1sDrir4o0kBNH_YKDtGGkuJVcFXzym8/rs:fill/w:232/h:174/bG9jYWw6Ly8vMS82/LzE2YjI4MDg0YmI1/ZTVlMDU4NDU2YzVi/ZTA1ZTJjZmU5ODVk/NGQ0YzMucG5n.jpeg"><div class="game-name">Aviator</div></div>
-            <div class="game-item" onclick="showSignal('Mines')"><img src="https://img-a.vavada-cdn.net/-F9un96-x1beV9Q3Z--_RrHfndfaV-3T5slHs06xzB4/rs:fill/w:232/h:174/bG9jYWw6Ly8vOS85/Lzk5NDA4OGUzOWQx/YmNjYWM5ODE1Y2Vi/OTc1MzRlZGQwMjJi/NThhNjkucG5n.jpeg"><div class="game-name">Mines</div></div>
-            <div class="game-item" onclick="showSignal('Penalty')"><img src="https://img-a.vavada-cdn.net/3KkQgmKpf-bM5cKgzNcKsvIiqgXF7i0EboyqpAnZjOk/rs:fill/w:232/h:174/bG9jYWw6Ly8vOC8x/LzgxMjlhOWE4Njkz/ZTMzYjczNGE1MGI1/ODhhMjc2ZTVlMjFm/ZGUxYTIuanBn.jpeg"><div class="game-name">Penalty</div></div>
-            <div class="game-item" onclick="showSignal('Chicken')"><img src="https://img-a.vavada-cdn.net/jmo-Ere_Ld6xNGmWV9-hCc9w87VOULwKgdp7DWa4bx0/rs:fill/w:232/h:174/bG9jYWw6Ly8vZS8w/L2UwMDIyNzJhNTNk/ZTE4YTZmYjU0YTli/MDQ0MmQ0NTgyMTQ0/ODhjNWEuanBn.jpeg"><div class="game-name">Chicken Road</div></div>
-        </div>
-    </div>
-
-    <div id="step5" class="step-content">
-        <h2 id="activeGame" style="font-size: 1rem;">---</h2>
-        <div id="predictionBox" style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 15px; font-size: 2.5rem; color: var(--vavada-gold); font-weight: 900;">...</div>
-        <br>
-        <button class="btn-main" onclick="generateSignal()">Nowa Prognoza</button>
-    </div>
-
-    <footer>
-        <div class="pay-logos">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Blik_logo.svg">
-        </div>
-        <div class="copy">
-            © 2026 PROTOS AI: System VIP. Wszystkie prawa zastrzeżone. Graj odpowiedzialnie. <br>
-            Wszelkie próby manipulacji algorytmem są monitorowane.
-        </div>
-    </footer>
-</div>
-
-<div id="chat-btn" onclick="toggleChat()">💬</div>
-<div id="chat-win">
-    <div style="background: var(--vavada-purple); padding: 10px; font-weight: 800; font-size: 0.8rem;">VIP CHAT PL</div>
-    <div id="msgBox" style="flex:1; padding: 10px; overflow-y:auto; font-size:0.75rem;"></div>
-</div>
-
-<script>
-    function goToStep(s) {
-        document.querySelectorAll('.step-content').forEach(c => c.classList.remove('active'));
-        document.getElementById('step'+s).classList.add('active');
-        window.scrollTo(0,0);
-    }
-
-    function validateID() {
-        const val = document.getElementById('idVal').value;
-        if(val.length === 10 && /^\d+$/.test(val)) {
-            goToStep(3);
-        } else {
-            alert("BŁĄD: ID musi składać się dokładnie z 10 cyfr.");
-        }
-    }
-
-    function startAIScan() {
-        const file = document.getElementById('screenshotInput').files[0];
-        if(!file) { alert("Proszę wybrać plik!"); return; }
-
-        const status = document.getElementById('scanStatus');
-        status.innerText = "Trwa analiza dokumentu (OCR)...";
-        
-        setTimeout(() => {
-            // Имитация распознавания текста (70% шанс успеха)
-            if(Math.random() > 0.3) {
-                alert("AI SKANER: Wykryto balans powyżej 75 PLN. Dostęp aktywowany.");
-                goToStep(4);
-                startChat();
-            } else {
-                status.innerText = "❌ BŁĄD: Nie wykryto balansu lub kwota jest mniejsza niż 75 PLN.";
-                alert("Błąd weryfikacji! Upewnij się, że na screenie widać Twój balans (min. 75 PLN).");
-            }
-        }, 2000);
-    }
-
-    let currentG = '';
-    function showSignal(name) { 
-        currentG = name; 
-        document.getElementById('activeGame').innerText = name; 
-        generateSignal(); 
-        goToStep(5); 
-    }
-
-    function generateSignal() {
-        const box = document.getElementById('predictionBox');
-        box.innerText = "Analiza...";
-        setTimeout(() => {
-            if(currentG === 'Aviator') box.innerText = 'x' + (1.1 + Math.random() * 0.4).toFixed(2);
-            else if(currentG === 'Mines') box.innerText = "💣 POLE: " + (Math.floor(Math.random()*25)+1);
-            else box.innerText = "GOL: ŚRODEK";
-        }, 1000);
-    }
-
-    function toggleChat() {
-        const w = document.getElementById('chat-win');
-        w.style.display = w.style.display === 'flex' ? 'none' : 'flex';
-    }
-
-    function startChat() {
-        const msgs = ["Działa u was Mines?", "Tak, u mnie właśnie wpadło 40 PLN", "Aviator x1.25 pewniaczek", "Pozdro z Łodzi!", "Kolejny win, dzięki PROTOS"];
-        setInterval(() => {
-            const d = document.createElement('div');
-            d.innerHTML = `<b style="color:var(--vavada-pink)">User_${Math.floor(Math.random()*999)}:</b> ${msgs[Math.floor(Math.random()*msgs.length)]}`;
-            d.style.marginBottom = "5px";
-            document.getElementById('msgBox').prepend(d);
-        }, 5000);
-    }
-</script>
-
-</body>
-</html>
+        <p>Wprowadź swoje ID gracza (10 cyfr),
