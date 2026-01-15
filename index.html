@@ -7,242 +7,356 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
+            --bg-dark: #121212;
+            --card-bg: #1e1e1e;
             --vavada-purple: #2b1254;
-            --vavada-dark: #1a0a33;
-            --vavada-red: #e60045;
+            --vavada-pink: #ff2d70;
             --vavada-gold: #ffcc00;
+            --text-gray: #b0b0b0;
         }
 
         body {
             margin: 0;
             padding: 0;
             font-family: 'Roboto', sans-serif;
-            background-color: var(--vavada-dark);
+            background-color: var(--bg-dark);
             color: white;
-            text-align: center;
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        /* Header & Logo Section */
         header {
-            padding: 20px;
-            background: linear-gradient(180deg, var(--vavada-purple) 0%, var(--vavada-dark) 100%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #333;
         }
 
-        .flag { width: 30px; margin-bottom: 10px; }
-
-        /* Main Screen */
-        .hero-title {
-            font-size: 28px;
+        .logo {
+            font-size: 24px;
             font-weight: bold;
             color: white;
-            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .hero-description {
-            font-size: 16px;
-            color: #ccc;
+        .logo span { color: var(--vavada-pink); }
+
+        .step-content { display: none; text-align: center; animation: fadeIn 0.5s ease; }
+        .active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .hero-title {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--text-gray);
             line-height: 1.6;
-            margin: 20px 0;
+            max-width: 800px;
+            margin: 0 auto 30px;
         }
 
-        .stats-box {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid var(--vavada-purple);
-            margin: 20px 0;
+        .stats-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            display: inline-block;
+            text-align: left;
+            border: 1px solid #333;
+            margin-bottom: 30px;
+            min-width: 320px;
         }
 
-        .main-btn {
-            background: linear-gradient(180deg, #ff0055 0%, #b3003b 100%);
+        .stat-row { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .stat-val { font-weight: bold; color: var(--vavada-gold); }
+
+        .btn-main {
+            background: linear-gradient(90deg, #ff2d70, #ff5e95);
             color: white;
             border: none;
-            padding: 20px 40px;
-            font-size: 20px;
+            padding: 18px 45px;
+            font-size: 1.2rem;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(230, 0, 69, 0.5);
+            box-shadow: 0 0 20px rgba(255, 45, 112, 0.4);
             transition: 0.3s;
             text-transform: uppercase;
         }
 
-        .main-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(230, 0, 69, 0.8);
-        }
+        .btn-main:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 45, 112, 0.6); }
 
-        /* Winners Section */
-        .winners-section {
-            margin-top: 50px;
-            background: rgba(0,0,0,0.3);
+        .winners-box {
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
             padding: 20px;
-            border-top: 2px solid var(--vavada-purple);
+            margin-top: 50px;
+            text-align: left;
+            border: 1px solid #222;
         }
 
-        .winner-item {
+        .winner-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 0;
+            border-bottom: 1px solid #333;
         }
 
-        .winner-amount { color: var(--vavada-gold); font-weight: bold; }
-
-        /* Overlay & Modals */
-        .step-content { display: none; padding: 20px; }
-        .active { display: block !important; }
-
-        input[type="text"], input[type="file"] {
-            width: 80%;
+        input {
+            background: #252525;
+            border: 1px solid #444;
             padding: 15px;
-            margin: 15px 0;
-            border-radius: 5px;
-            border: none;
+            color: white;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1rem;
         }
 
-        /* Games Grid */
         .games-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
         }
 
         .game-card {
             background: var(--vavada-purple);
-            padding: 20px;
-            border-radius: 10px;
+            padding: 40px 20px;
+            border-radius: 20px;
             cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
         }
 
-        /* Chat */
-        #chat-box {
+        .game-card:hover { background: #3d1b75; transform: translateY(-5px); }
+
+        /* CHAT */
+        #chat-widget {
             position: fixed;
-            bottom: 10px;
-            right: 10px;
-            width: 200px;
-            background: rgba(0,0,0,0.8);
-            font-size: 12px;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: left;
+            bottom: 20px;
+            right: 20px;
+            width: 280px;
+            height: 350px;
+            background: #1a1a1a;
+            border: 1px solid #444;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            z-index: 1000;
+        }
+
+        .chat-header { background: var(--vavada-purple); padding: 10px; border-radius: 15px 15px 0 0; font-size: 0.9rem; font-weight: bold; }
+        #chat-messages { flex: 1; overflow-y: auto; padding: 10px; font-size: 0.85rem; }
+        .chat-msg { margin-bottom: 10px; border-bottom: 1px solid #222; padding-bottom: 5px; }
+        .chat-user { color: var(--vavada-pink); font-weight: bold; }
+
+        footer {
+            margin-top: 60px;
+            padding: 40px 0;
+            border-top: 1px solid #222;
+        }
+
+        .trust-logos {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            align-items: center;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div id="step1" class="step-content active">
-        <img src="https://upload.wikimedia.org/wikipedia/en/1/12/Flag_of_Poland.svg" class="flag" alt="PL">
-        <div class="hero-title">🤖 PROTOS AI v4.2: Połączenie nawiązane.</div>
-        <div class="hero-description">
-            Nasz system analizuje luki w algorytmach kasynowych przy użyciu sieci neuronowych. 
-            W tej chwili monitorujemy ponad 140 systemów, aby dostarczyć Ci prognozy o najwyższym prawdopodobieństwie wygranej.
-        </div>
-        <div class="stats-box">
-            📊 <b>Status:</b> Aktywny <br>
-            🎯 <b>Skuteczność:</b> 94.8% <br>
-            👥 <b>Miejsca:</b> 7/100
-        </div>
-        <p>Dzięki PROTOS AI nie grasz przeciwko kasynu — grasz z matematyczną przewagą.</p>
-        <button class="main-btn" onclick="nextStep(2)">DOŁĄCZ DO ZESPOŁU</button>
+    <header>
+        <div class="logo">V<span>A</span>VADA <span>PROTOS AI</span></div>
+        <img src="https://upload.wikimedia.org/wikipedia/en/1/12/Flag_of_Poland.svg" width="30" alt="Poland">
+    </header>
 
-        <div class="winners-section">
-            <h3>🏆 Zwycięzcy naszej drużyny</h3>
-            <div class="winner-item"><span>Marek K.</span> <span class="winner-amount">12,400 PLN</span></div>
-            <div class="winner-item"><span>Adam Z.</span> <span class="winner-amount">8,750 PLN</span></div>
-            <div class="winner-item"><span>Piotr W.</span> <span class="winner-amount">15,200 PLN</span></div>
+    <div id="step1" class="step-content active">
+        <h1 class="hero-title">🤖 <b>PROTOS AI v4.2: Połączenie nawiązane.</b></h1>
+        <p class="hero-desc">
+            Nasz system analizuje luki w algorytmach kasynowych przy użyciu sieci neuronowych. W tej chwili monitorujemy ponad 140 systemów, aby dostarczyć Ci prognozy o najwyższym prawdopodobieństwie wygranej.
+        </p>
+
+        <div class="stats-card">
+            <div class="stat-row"><span>📊 Status systemu:</span> <span class="stat-val" style="color: #00ff00;">Aktywny</span></div>
+            <div class="stat-row"><span>🎯 Skuteczność AI:</span> <span class="stat-val">94.8%</span></div>
+            <div class="stat-row"><span>👥 Dostępne miejsca:</span> <span class="stat-val">7/100</span></div>
+        </div>
+
+        <p class="hero-desc" style="font-size: 0.95rem;">Dzięki PROTOS AI nie grasz przeciwko kasynu — grasz z matematyczną przewagą.</p>
+        <p><b>Kliknij przycisk poniżej, aby aktywować swój dostęp i odebrać pierwszą prognozę:</b></p>
+        
+        <button class="btn-main" onclick="goToStep(2)">Dołącz do zespołu</button>
+
+        <div class="winners-box">
+            <h3 style="text-align: center;">🏆 Zwycięzcy naszej drużyny</h3>
+            <div class="winner-row"><span>Andrzej_Wwa:</span> <span class="stat-val">15,400.00 PLN</span></div>
+            <div class="winner-row"><span>Marek_Gda:</span> <span class="stat-val">8,250.00 PLN</span></div>
+            <div class="winner-row"><span>Piotr_Krk:</span> <span class="stat-val">22,100.00 PLN</span></div>
+            <div class="winner-row"><span>Kasia_Pl:</span> <span class="stat-val">6,700.00 PLN</span></div>
         </div>
     </div>
 
     <div id="step2" class="step-content">
-        <h2>⚠️ Konto nieaktywne!</h2>
-        <p>Aby AI zaczęło generować sygnały dla Twojego ID, musisz:</p>
-        <p>1. <b>Zarejestrować się</b> przez przycisk poniżej.<br>
-           2. <b>Zasilić saldo (min. 75 PLN)</b>, aby aktywować algorytm.</p>
-        <button class="main-btn" onclick="window.open('ТВОЯ_ССЫЛКА_ТУТ')">🔗 REJESTRACJA (PROTOS AI)</button>
-        <br><br>
-        <input type="text" id="userID" placeholder="Wpisz swoje ID (zaczyna się od 153...)">
-        <button class="main-btn" style="font-size: 14px; padding: 10px;" onclick="validateID()">DALEJ</button>
+        <h2 style="color: var(--vavada-pink); font-size: 2rem;">⚠️ Konto nieaktywne!</h2>
+        <p class="hero-desc">
+            Aby AI zaczęło generować sygnały dla Twojego ID, musisz:<br><br>
+            1. <b>Zarejestrować się</b> przez przycisk poniżej.<br>
+            2. <b>Zasilić saldo</b>, aby aktywować algorytm.
+        </p>
+        <p style="font-size: 0.9rem; color: #888;">Bez depozyту system nie widzi Twojego konta i nie może przesłać prognozy.</p>
+        
+        <button class="btn-main" style="background: #333; margin-bottom: 30px;" onclick="window.open('https://vavada.com/pl/')">🔗 REJESTRACJA (PROTOS AI)</button>
+        
+        <div style="margin-top: 20px;">
+            <p>Wpisz swoje ID gracза (dokładnie 10 cyfr):</p>
+            <input type="text" id="playerID" placeholder="1234567890" maxlength="10">
+            <br>
+            <button class="btn-main" onclick="validateID()">Dalej</button>
+        </div>
     </div>
 
     <div id="step3" class="step-content">
-        <h2>Potwierdź depozyt</h2>
-        <p>Prześlij zrzut ekranu (screenshot) swojego salda (min. 75 PLN), aby system AI mógł zweryfikować połączenie.</p>
-        <input type="file" id="screenshot" accept="image/*">
-        <button class="main-btn" onclick="validateScreen()">WERYFIKUJ</button>
+        <h2>💰 Aktywacja algorytmu</h2>
+        <p class="hero-desc">Prześlij zrzut ekranu (screenshot) swojego salda. <br>Minimalna kwota aktywacji: <b>75.00 PLN</b></p>
+        
+        <div class="stats-card">
+            <input type="file" id="screenshot" accept="image/*" style="border: none; background: none;">
+            <p style="font-size: 0.8rem; color: #888;">System automatycznie sprawdzi Twój balans (min. 75 PLN).</p>
+        </div>
+        <br>
+        <button class="btn-main" onclick="validateDeposit()">Zweryfikuj i aktywuj</button>
     </div>
 
     <div id="step4" class="step-content">
-        <h2>Wybierz grę do analizy:</h2>
+        <h2>🚀 Wybierz grę do analizy</h2>
         <div class="games-grid">
-            <div class="game-card" onclick="getSignal('Aviator')">✈️ Aviator</div>
-            <div class="game-card" onclick="getSignal('Mines')">💣 Mines</div>
-            <div class="game-card" onclick="getSignal('Penalty')">⚽ Penalty</div>
-            <div class="game-card" onclick="getSignal('Chicken Road')">🐥 Chicken</div>
-        </div>
-        <div id="signal-display" style="margin-top: 20px; font-weight: bold; color: var(--vavada-gold); font-size: 24px;"></div>
-        
-        <div id="chat-box">
-            <b>Czat na żywo:</b>
-            <div id="messages"></div>
+            <div class="game-card" onclick="showSignal('Aviator')">✈️<br>Aviator</div>
+            <div class="game-card" onclick="showSignal('Mines')">💣<br>Mines</div>
+            <div class="game-card" onclick="showSignal('Penalty')">⚽<br>Penalty</div>
+            <div class="game-card" onclick="showSignal('Chicken Road')">🐥<br>Chicken Road</div>
         </div>
     </div>
+
+    <div id="step5" class="step-content">
+        <h2 id="selectedGame">Gra</h2>
+        <div class="stats-card" style="text-align: center; width: 100%; max-width: 400px;">
+            <p style="color: #888;">Generowanie prognozy AI...</p>
+            <div id="signalResult" style="font-size: 3.5rem; font-weight: bold; color: var(--vavada-gold); margin: 15px 0;">---</div>
+            <p id="signalConfidence" style="color: #00ff00; font-weight: bold;"></p>
+        </div>
+        <br>
+        <button class="btn-main" onclick="generateSignal()">Nowa prognoza</button>
+        <br><br>
+        <button style="background: none; border: none; color: #888; cursor: pointer;" onclick="goToStep(4)">⬅ Powrót do gier</button>
+    </div>
+
+    <footer>
+        <div class="trust-logos">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg" height="25" alt="Apple Pay">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" height="15" alt="Visa">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" height="25" alt="Mastercard">
+            <span style="font-weight: bold; font-size: 0.9rem;">BLIK</span>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/MGA_Logo.png" height="30" alt="MGA">
+            <span style="border: 1px solid #fff; padding: 2px 5px; border-radius: 5px; font-size: 0.8rem;">18+</span>
+        </div>
+        <p style="font-size: 0.75rem; text-align: center; margin-top: 30px; color: #555;">© 2026 PROTOS AI: System VIP. Wszystkie prawa zastrzeżone. Graj odpowiedzialnie.</p>
+    </footer>
+</div>
+
+<div id="chat-widget" style="display:none;">
+    <div class="chat-header">🗨️ Czat Zespołu VIP (Na żywo)</div>
+    <div id="chat-messages"></div>
 </div>
 
 <script>
-    function nextStep(step) {
-        document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
+    function goToStep(step) {
+        document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
         document.getElementById('step' + step).classList.add('active');
+        window.scrollTo(0,0);
     }
 
     function validateID() {
-        const id = document.getElementById('userID').value;
-        if (id.startsWith('153')) {
-            nextStep(3);
+        const id = document.getElementById('playerID').value;
+        const regex = /^\d{10}$/;
+        if (regex.test(id)) {
+            goToStep(3);
         } else {
-            alert('Błąd! Twoje ID musi zaczynać się od 153. Sprawdź i spróbuj ponownie.');
+            alert('Błąd! Twoje ID musi składać się dokładnie z 10 cyfr.');
         }
     }
 
-    function validateScreen() {
+    function validateDeposit() {
         const file = document.getElementById('screenshot').files[0];
         if (file) {
-            alert('Weryfikacja obrazu... System wykrył saldo powyżej 75 PLN.');
-            nextStep(4);
+            alert('Analiza obrazu... System wykrył wpłatę powyżej 75.00 PLN.');
+            goToStep(4);
+            document.getElementById('chat-widget').style.display = 'flex';
             startChat();
         } else {
-            alert('Proszę załączyć zrzut ekranu.');
+            alert('Proszę załączyć zrzut экрана salda dla aktywacji.');
         }
     }
 
-    function getSignal(game) {
-        const display = document.getElementById('signal-display');
-        display.innerHTML = "Analiza systemu...";
+    function showSignal(gameName) {
+        document.getElementById('selectedGame').innerText = gameName;
+        document.getElementById('signalResult').innerText = "---";
+        document.getElementById('signalConfidence').innerText = "";
+        goToStep(5);
+        generateSignal();
+    }
+
+    function generateSignal() {
+        document.getElementById('signalResult').innerText = "...";
         setTimeout(() => {
-            const coef = (Math.random() * (1.5 - 1.1) + 1.1).toFixed(2);
-            display.innerHTML = `PROGNOZA ${game}: <br> Celuj w x${coef}`;
+            const lowOdds = [1.20, 1.35, 1.42, 1.15, 1.50, 1.28, 1.31, 1.10, 1.48];
+            const result = lowOdds[Math.floor(Math.random() * lowOdds.length)];
+            document.getElementById('signalResult').innerText = "x" + result.toFixed(2);
+            document.getElementById('signalConfidence').innerText = "SKUTECZNOŚĆ: 98.4%";
         }, 1500);
     }
 
     function startChat() {
-        const msgs = ["Działa! x1.3 wpadło", "PROTOS jest niesamowity", "U mnie też prognozy wchodzą", "Cierpliwości, u mnie zadziałało po 2 min"];
-        const box = document.getElementById('messages');
+        const msgs = [
+            {u: "Tomasz_88", t: "Właśnie weszło x1.35 na Aviatorze! Dzięki!"},
+            {u: "Kamil_VIP", t: "Czy u was też Mines podaje takie celne sygnały?"},
+            {u: "Ewa_Gda", t: "Tak, te małe kursy są najbezpieczniejsze."},
+            {u: "Moderator", t: "Gratulacje! Pamiętajcie o dyscyplinie."},
+            {u: "Piotr_K", t: "Z 100 PLN zrobiłem już 250 PLN dzisiaj."}
+        ];
+        const chatBox = document.getElementById('chat-messages');
         setInterval(() => {
             const m = msgs[Math.floor(Math.random() * msgs.length)];
             const div = document.createElement('div');
-            div.innerHTML = `> ${m}`;
-            box.prepend(div);
+            div.className = 'chat-msg';
+            div.innerHTML = `<span class="chat-user">${m.u}:</span> ${m.t}`;
+            chatBox.prepend(div);
+            if (chatBox.children.length > 10) chatBox.removeChild(chatBox.lastChild);
         }, 5000);
     }
 </script>
-
 </body>
 </html>
