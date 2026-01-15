@@ -104,6 +104,7 @@
         footer { margin-top: 60px; padding: 40px 0; border-top: 1px solid #333; }
         .pay-logos { display: flex; justify-content: center; align-items: center; gap: 30px; margin-bottom: 25px; flex-wrap: wrap; }
         .pay-logos img { height: 25px; filter: grayscale(1) brightness(2); }
+        .blik-text-logo { font-weight: 900; font-size: 1.5rem; color: #fff; text-transform: uppercase; }
         .copy { font-size: 0.75rem; color: #777; line-height: 1.6; max-width: 600px; margin: 0 auto; }
 
         /* --- CHAT --- */
@@ -116,6 +117,104 @@
 
         /* --- INPUTS --- */
         .id-input { background: #222; border: 1px solid #444; padding: 15px; color: white; border-radius: 8px; width: 260px; margin-bottom: 15px; text-align: center; font-size: 1.1rem; }
+
+        /* --- GAME SPECIFIC PREDICTIONS --- */
+        .mines-grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+            width: 300px; /* Adjust as needed */
+            margin: 20px auto;
+            border: 1px solid #444;
+            padding: 5px;
+            border-radius: 8px;
+        }
+        .mine-cell {
+            width: 50px; /* Adjust size */
+            height: 50px; /* Adjust size */
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        .mine-cell.diamond {
+            background-color: var(--vavada-gold);
+            color: #111;
+        }
+        .penalty-target-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 10px;
+            width: 250px;
+            height: 150px;
+            margin: 20px auto;
+            border: 2px solid #555;
+            position: relative;
+        }
+        .penalty-target-grid::before {
+            content: "🥅";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 100px;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+        .penalty-spot {
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            position: relative;
+            z-index: 1;
+        }
+        .penalty-spot.target {
+            background-color: var(--vavada-pink);
+            color: white;
+            box-shadow: 0 0 15px var(--vavada-pink);
+            opacity: 1;
+        }
+        .chicken-path-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .chicken-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        .chicken-tile {
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+        }
+        .chicken-tile.path {
+            background-color: var(--vavada-gold);
+            color: #111;
+            box-shadow: 0 0 10px var(--vavada-gold);
+        }
+        .chicken-tile.current-chicken {
+             content: "🐔"; /* Иконка курицы */
+            position: absolute;
+            font-size: 24px;
+            z-index: 2;
+        }
     </style>
 </head>
 <body>
@@ -143,12 +242,12 @@
         <div style="margin-top: 60px; text-align: left;">
             <h3 style="border-left: 4px solid var(--vavada-pink); padding-left: 15px;">🏆 Zwycięzcy naszej drużyny:</h3>
             <div class="winner-grid">
-                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=1"><div><small>ID: 152**441</small><br><b>12,450 PLN</b></div></div>
-                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=2"><div><small>ID: 153**902</small><br><b>8,100 PLN</b></div></div>
-                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=3"><div><small>ID: 154**115</small><br><b>21,000 PLN</b></div></div>
-                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=4"><div><small>ID: 155**773</small><br><b>5,600 PLN</b></div></div>
-                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=5"><div><small>ID: 152**229</small><br><b>14,900 PLN</b></div></div>
-                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=6"><div><small>ID: 153**004</small><br><b>9,200 PLN</b></div></div>
+                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=1521"><div><small>ID: 152**441</small><br><b>12,450 PLN</b></div></div>
+                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=1531"><div><small>ID: 153**902</small><br><b>8,100 PLN</b></div></div>
+                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=1541"><div><small>ID: 154**115</small><br><b>21,000 PLN</b></div></div>
+                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=1551"><div><small>ID: 155**773</small><br><b>5,600 PLN</b></div></div>
+                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=1522"><div><small>ID: 152**229</small><br><b>14,900 PLN</b></div></div>
+                <div class="winner-card"><img src="https://i.pravatar.cc/100?u=1532"><div><small>ID: 153**004</small><br><b>9,200 PLN</b></div></div>
             </div>
         </div>
     </div>
@@ -168,7 +267,7 @@
         <h2>📊 Skaner Balansu</h2>
         <p>Prześlij screen konta. Wymagane: min. <b>75 PLN</b>.<br><small>Nasz algorytm AI zweryfikuje Twój depozyt w czasie rzeczywistym.</small></p>
         <div style="background: rgba(255,255,255,0.05); padding: 40px; border: 2px dashed #444; border-radius: 15px; margin-bottom: 20px;">
-            <input type="file" id="depositFile" accept="image/*">
+            <input type="file" id="depositFile" accept="image/*" onchange="resetDepositError()">
         </div>
         <button class="btn-main" onclick="verifyDeposit()">Weryfikuj Depozyt</button>
         <p id="errorMsg" style="color:red; display:none; margin-top:15px;">❌ BŁĄD: AI nie wykryło depozytu min. 75 PLN na zdjęciu. Spróbuj ponownie.</p>
@@ -179,19 +278,19 @@
         <p>Algorytm jest gotowy. Wybierz grę, aby otrzymać prognozę:</p>
         <div class="games-grid">
             <div class="game-item" onclick="openGame('Aviator')">
-                <img src="https://img-a.vavada-cdn.net/MQqyzUi16QUy1sDrir4o0kBNH_YKDtGGkuJVcFXzym8/rs:fill/w:232/h:174/bG9jYWw6Ly8vMS82/LzE2YjI4MDg0YmI1/ZTVlMDU4NDU2YzVi/ZTA1ZTJjZmU5ODVk/NGQ0YzMucG5n.jpeg">
+                <img src="https://img-a.vavada-cdn.net/MQqyzUi16QUy1sDrir4o0kBNH_YKDtGGkuJVcFXzym8/rs:fill/w:232/h:174/bG9jYWw6Ly8vMS82/LzE2YjI4MDg0YmI1/ZTVlMDU4NDU2YzVi/ZTA1ZTJjZmU5ODVk/NGQ0YzMucG5n.jpeg" alt="Aviator">
                 <div class="game-name">Aviator</div>
             </div>
             <div class="game-item" onclick="openGame('Mines')">
-                <img src="https://img-a.vavada-cdn.net/-F9un96-x1beV9Q3Z--_RrHfndfaV-3T5slHs06xzB4/rs:fill/w:232/h:174/bG9jYWw6Ly8vOS85/Lzk5NDA4OGUzOWQx/YmNjYWM5ODE1Y2Vi/OTc1MzRlZGQwMjJi/NThhNjkucG5n.jpeg">
+                <img src="https://img-a.vavada-cdn.net/-F9un96-x1beV9Q3Z--_RrHfndfaV-3T5slHs06xzB4/rs:fill/w:232/h:174/bG9jYWw6Ly8vOS85/Lzk5NDA4OGUzOWQx/YmNjYWM5ODE1Y2Vi/OTc1MzRlZGQwMjJi/NThhNjkucG5n.jpeg" alt="Mines">
                 <div class="game-name">Mines</div>
             </div>
             <div class="game-item" onclick="openGame('Penalty')">
-                <img src="https://img-a.vavada-cdn.net/3KkQgmKpf-bM5cKgzNcKsvIiqgXF7i0EboyqpAnZjOk/rs:fill/w:232/h:174/bG9jYWw6Ly8vOC8x/LzgxMjlhOWE4Njkz/ZTMzYjczNGE1MGI1/ODhhMjc2ZTVlMjFm/ZGUxYTIuanBn.jpeg">
+                <img src="https://img-a.vavada-cdn.net/3KkQgmKpf-bM5cKgzNcKsvIiqgXF7i0EboyqpAnZjOk/rs:fill/w:232/h:174/bG9jYWw6Ly8vOC8x/LzgxMjlhOWE4Njkz/ZTMzYjczNGE1MGI1/ODhhMjc2ZTVlMjFm/ZGUxYTIuanBn.jpeg" alt="Penalty">
                 <div class="game-name">Penalty</div>
             </div>
             <div class="game-item" onclick="openGame('Chicken Road')">
-                <img src="https://img-a.vavada-cdn.net/jmo-Ere_Ld6xNGmWV9-hCc9w87VOULwKgdp7DWa4bx0/rs:fill/w:232/h:174/bG9jYWw6Ly8vZS8w/L2UwMDIyNzJhNTNk/ZTE4YTZmYjU0YTli/MDQ0MmQ0NTgyMTQ0/ODhjNWEuanBn.jpeg">
+                <img src="https://img-a.vavada-cdn.net/jmo-Ere_Ld6xNGmWV9-hCc9w87VOULwKgdp7DWa4bx0/rs:fill/w:232/h:174/bG9jYWw6Ly8vZS8w/L2UwMDIyNzJhNTNk/ZTE4YTZmYjU0YTli/MDQ0MmQ0NTgyMTQ0/ODhjNWEuanBn.jpeg" alt="Chicken Road">
                 <div class="game-name">Chicken Road</div>
             </div>
         </div>
@@ -199,9 +298,10 @@
 
     <div id="step5" class="step-content">
         <h2 id="activeGameTitle">Prognoza AI</h2>
-        <div id="predictionBox" style="background: rgba(0,0,0,0.5); padding: 50px; border-radius: 20px; border: 2px solid var(--vavada-gold); font-size: 2rem; margin-bottom: 20px;">
+        <div id="predictionBox" style="background: rgba(0,0,0,0.5); padding: 50px; border-radius: 20px; border: 2px solid var(--vavada-gold); margin-bottom: 20px;">
             <div id="loadingText">🤖 AI analizuje algorytm...</div>
-            <div id="resultText" style="display:none; color:var(--vavada-gold); font-weight: 900;"></div>
+            <div id="resultContent" style="display:none;">
+                </div>
         </div>
         <button class="btn-main" onclick="generatePrediction()">Nowa Prognoza</button>
         <br>
@@ -213,7 +313,7 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal">
             <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard">
             <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Blik_logo.svg" style="height:25px; filter:none;" alt="Blik">
+            <span class="blik-text-logo">BLIK</span>
         </div>
         <div class="copy">
             © 2026 PROTOS AI: System VIP. Wszystkie prawa zastrzeżone. Graj odpowiedzialnie.<br>
@@ -248,6 +348,10 @@
         }
     }
 
+    function resetDepositError() {
+        document.getElementById('errorMsg').style.display = 'none';
+    }
+
     function verifyDeposit() {
         const fileInput = document.getElementById('depositFile');
         const error = document.getElementById('errorMsg');
@@ -257,15 +361,15 @@
             return;
         }
 
-        // Имитация ИИ-сканера (рандомно пропускает или выдает ошибку)
-        // В реальности здесь был бы запрос к API для анализа картинки
-        const isSuccess = Math.random() > 0.3; 
+        // Имитация ИИ-сканера для проверки суммы 75 PLN
+        // В реальном проекте здесь будет интеграция с OCR API или Vision API
+        const isDepositValid = Math.random() > 0.2; // 80% шанс успеха для демонстрации
 
-        if(isSuccess) {
+        if(isDepositValid) {
             error.style.display = 'none';
-            alert("✅ AI VERIFICATION: Depozyt 75 PLN potwierdzony!");
+            alert("✅ AI VERIFICATION: Depozyt min. 75 PLN potwierdzony!");
             goToStep(4);
-            startChat(); // Включаем чат
+            startChat(); // Включаем чат после успешной верификации
         } else {
             error.style.display = 'block';
         }
@@ -274,31 +378,85 @@
     let activeGame = '';
     function openGame(game) {
         activeGame = game;
-        document.getElementById('activeGameTitle').innerText = "PROGNOZA: " + game;
+        document.getElementById('activeGameTitle').innerText = "PROGNOZA: " + game.toUpperCase();
         generatePrediction();
         goToStep(5);
     }
 
     function generatePrediction() {
         const loading = document.getElementById('loadingText');
-        const result = document.getElementById('resultText');
+        const resultContent = document.getElementById('resultContent');
         loading.style.display = 'block';
-        result.style.display = 'none';
+        resultContent.style.display = 'none';
+        resultContent.innerHTML = ''; // Очищаем предыдущий результат
 
         setTimeout(() => {
             loading.style.display = 'none';
-            result.style.display = 'block';
+            resultContent.style.display = 'block';
             
             if(activeGame === 'Aviator') {
-                result.innerText = "CELUJ W: x" + (1.2 + Math.random() * 2).toFixed(2);
+                resultContent.innerHTML = `<p style="font-size: 2.5rem; color:var(--vavada-gold); font-weight: 900;">X${(1.1 + Math.random() * 2).toFixed(2)}</p><p>Cashout przed upływem!</p>`;
             } else if(activeGame === 'Mines') {
-                const cells = Array.from({length: 3}, () => Math.floor(Math.random() * 25) + 1);
-                result.innerText = "OTWÓRZ POLA: " + cells.join(", ");
+                const minesSize = 5;
+                const totalCells = minesSize * minesSize;
+                const diamondCount = 5 + Math.floor(Math.random() * 5); // От 5 до 9 алмазов
+                let cells = Array.from({length: totalCells}, (_, i) => i + 1);
+                let selectedDiamonds = [];
+
+                while(selectedDiamonds.length < diamondCount) {
+                    const randomIndex = Math.floor(Math.random() * cells.length);
+                    const cell = cells.splice(randomIndex, 1)[0];
+                    selectedDiamonds.push(cell);
+                }
+                selectedDiamonds.sort((a,b) => a-b);
+
+                let minesGridHtml = '<div class="mines-grid-container">';
+                for(let i = 1; i <= totalCells; i++) {
+                    minesGridHtml += `<div class="mine-cell ${selectedDiamonds.includes(i) ? 'diamond' : ''}">${selectedDiamonds.includes(i) ? '💎' : ''}</div>`;
+                }
+                minesGridHtml += '</div>';
+                resultContent.innerHTML = `<p style="font-size: 1.2rem; color:var(--vavada-gold); font-weight: 900;">SCHEMAT DIAMENTÓW (5x5):</p>${minesGridHtml}<p style="font-size: 1rem;">Otwórz pola z diamentami. Unikaj min!</p>`;
+
             } else if(activeGame === 'Penalty') {
-                const sides = ["LEWO GÓRA", "PRAWO DÓŁ", "ŚRODEK"];
-                result.innerText = "STRZELAJ: " + sides[Math.floor(Math.random() * sides.length)];
-            } else {
-                result.innerText = "Zalecany Bet: 10 PLN | Kliknij 3 razy";
+                const targets = ["GÓRA LEWO", "GÓRA ŚRODEK", "GÓRA PRAWO", "DÓŁ LEWO", "DÓŁ ŚRODEK", "DÓŁ PRAWO"];
+                const targetIndex = Math.floor(Math.random() * targets.length);
+                const chosenTarget = targets[targetIndex];
+
+                let penaltyGridHtml = '<div class="penalty-target-grid">';
+                targets.forEach((target, index) => {
+                    penaltyGridHtml += `<div class="penalty-spot ${index === targetIndex ? 'target' : ''}">${target.replace(' ', '<br>')}</div>`;
+                });
+                penaltyGridHtml += '</div>';
+
+                resultContent.innerHTML = `<p style="font-size: 1.5rem; color:var(--vavada-gold); font-weight: 900;">STRZELAJ W: ${chosenTarget}</p>${penaltyGridHtml}<p>Trafienie gwarantowane!</p>`;
+
+            } else if(activeGame === 'Chicken Road') {
+                const rows = 3;
+                const cols = 3;
+                let path = [];
+                let currentPos = Math.floor(Math.random() * cols); // Start in a random column
+                path.push(currentPos);
+
+                for (let r = 1; r < rows; r++) {
+                    let nextPos;
+                    do {
+                        nextPos = currentPos + Math.floor(Math.random() * 3) - 1; // -1, 0, 1 from current
+                    } while (nextPos < 0 || nextPos >= cols);
+                    path.push(nextPos);
+                    currentPos = nextPos;
+                }
+
+                let chickenPathHtml = '<p style="font-size: 1.2rem; color:var(--vavada-gold); font-weight: 900;">ŚCIEŻKA DLA KURCZAKA:</p>';
+                for(let r = 0; r < rows; r++) {
+                    chickenPathHtml += '<div class="chicken-row">';
+                    for(let c = 0; c < cols; c++) {
+                        const isPath = path[r] === c;
+                        chickenPathHtml += `<div class="chicken-tile ${isPath ? 'path' : ''}">${isPath && r === 0 ? '🐔' : ''}</div>`;
+                    }
+                    chickenPathHtml += '</div>';
+                }
+                chickenPathHtml += `<p style="margin-top: 15px;">Podążaj żółtą ścieżką. Cashout na ${rows} rzędzie!</p>`;
+                resultContent.innerHTML = chickenPathHtml;
             }
         }, 1500);
     }
@@ -310,24 +468,27 @@
 
     function startChat() {
         const chatBox = document.getElementById('chat-content');
-        const names = ["Marcin88", "Kasia_PL", "VIP_King", "Lukas91", "Ania_G"];
+        const names = ["Marcin88", "Kasia_PL", "VIP_King", "Lukas91", "Ania_G", "ProGracz"];
         const texts = [
-            "Działa! Mines właśnie dało x4!",
-            "Wypłata 200 PLN przeszła w 5 minut, dzięki PROTOS.",
-            "Aviator x1.50 to najbezpieczniejsza opcja panowie.",
-            "Penalty jest dziś niesamowite, 3 strzały i Claim.",
-            "Czy u kogoś AI też pokazuje x5 na Aviatorze?"
+            "Właśnie siadło x1.40 na Aviatorze!",
+            "Mines AI super, otworzyłem 7 diamentów!",
+            "Działa u was? Wypłata 200 PLN w 5 min!",
+            "Tak, śmiga, Chicken Road to złoto dzisiaj.",
+            "Dzięki za prognozy, PROTOS AI to przyszłość!",
+            "Penalty pokazało środek, trafiłem!",
+            "Kolejne 150 PLN do przodu, kocham ten system.",
+            "Widział ktoś x3 na Aviatorze dziś?"
         ];
 
         setInterval(() => {
-            if(Math.random() > 0.5) {
+            if(Math.random() > 0.4) { // Немного уменьшил частоту для более естественного чата
                 const msg = document.createElement('div');
                 msg.className = 'chat-msg';
                 msg.innerHTML = `<b>${names[Math.floor(Math.random()*names.length)]}:</b> ${texts[Math.floor(Math.random()*texts.length)]}`;
                 chatBox.appendChild(msg);
                 chatBox.scrollTop = chatBox.scrollHeight;
             }
-        }, 4000);
+        }, 4000); // Сообщения каждые 4 секунды
     }
 </script>
 
