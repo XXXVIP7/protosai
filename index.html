@@ -13,7 +13,6 @@
             --vavada-purple: #2b1254;
             --vavada-gold: #ffcc00;
             --text-main: #ffffff;
-            --card-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         body {
@@ -24,9 +23,9 @@
             min-height: 100vh;
         }
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
 
-        /* HEADER & FLAG */
+        /* --- HEADER & REALISTIC FLAG --- */
         header {
             display: flex;
             justify-content: space-between;
@@ -37,23 +36,43 @@
         .logo { font-weight: 900; font-size: 28px; letter-spacing: -1px; }
         .logo span { color: var(--vavada-pink); }
 
-        .flag-pl {
-            width: 45px;
-            filter: drop-shadow(0 0 8px rgba(255,255,255,0.3));
-            animation: wave 3s infinite ease-in-out;
+        .flag-wave {
+            width: 60px;
+            height: 40px;
+            background: linear-gradient(to bottom, #fff 50%, #dc143c 50%);
+            border-radius: 2px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            overflow: hidden;
+            animation: waveEffect 2s infinite ease-in-out;
+            transform-origin: left;
         }
 
-        @keyframes wave {
-            0%, 100% { transform: rotate(0deg) skewY(0deg); }
-            50% { transform: rotate(2deg) skewY(1deg); }
+        .flag-wave::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 200%; height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(0,0,0,0.1) 100%);
+            animation: moveShine 2s infinite linear;
         }
 
-        /* STEPS LOGIC */
-        .step-content { display: none; animation: slideUp 0.6s ease; text-align: center; }
+        @keyframes waveEffect {
+            0% { transform: scaleY(1) skewY(0deg); }
+            50% { transform: scaleY(1.05) skewY(3deg); }
+            100% { transform: scaleY(1) skewY(0deg); }
+        }
+
+        @keyframes moveShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(0%); }
+        }
+
+        /* --- STEPS --- */
+        .step-content { display: none; text-align: center; animation: fadeIn 0.4s ease-in; }
         .active { display: block; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* BUTTONS */
+        /* --- BUTTONS --- */
         .btn-main {
             background: linear-gradient(45deg, #ff2d70, #ff5e95);
             border: none;
@@ -61,197 +80,203 @@
             color: white;
             font-weight: 900;
             font-size: 1.3rem;
-            border-radius: 15px;
+            border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0 0 25px rgba(255, 45, 112, 0.5);
+            box-shadow: 0 0 20px rgba(255, 45, 112, 0.5);
             transition: 0.3s;
             text-transform: uppercase;
         }
-        .btn-main:hover { transform: scale(1.05); filter: brightness(1.2); }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 0 35px rgba(255, 45, 112, 0.7); }
 
-        /* GAME CARDS */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .game-card {
-            background: var(--vavada-purple);
+        /* --- WINNERS (6 PERSONS) --- */
+        .winners-box {
+            margin-top: 50px;
+            background: rgba(0,0,0,0.3);
             border-radius: 20px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: 0.4s;
-            border: 2px solid transparent;
-            position: relative;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+            text-align: left;
         }
-
-        .game-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--vavada-pink);
-            box-shadow: 0 0 30px rgba(255, 45, 112, 0.3);
-        }
-
-        .game-card img { width: 100%; height: 160px; object-fit: cover; }
-        .game-card .title { padding: 15px; font-weight: 700; background: rgba(0,0,0,0.4); }
-
-        /* PREDICTION STYLES */
-        .prediction-box {
-            background: rgba(255,255,255,0.05);
-            border-radius: 25px;
-            padding: 40px;
-            margin: 20px auto;
-            max-width: 500px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .mines-grid {
+        .winner-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-            margin: 20px auto;
-            width: 250px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
         }
-        .mine-cell { width: 40px; height: 40px; background: #333; border-radius: 5px; }
-        .mine-cell.safe { background: var(--vavada-gold); box-shadow: 0 0 10px var(--vavada-gold); }
-
-        /* CHAT WIDGET */
-        #chat-trigger {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 65px;
-            height: 65px;
-            background: var(--vavada-pink);
-            border-radius: 50%;
+        .winner-card {
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.03);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .winner-card img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--vavada-pink); }
+        .winner-card b { color: var(--vavada-gold); font-size: 1.1rem; }
+        .winner-card span { font-size: 0.8rem; color: #888; display: block; }
+
+        /* --- GAMES GRID --- */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .game-item {
+            background: var(--vavada-purple);
+            border-radius: 15px;
+            overflow: hidden;
             cursor: pointer;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            z-index: 9999;
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
         }
+        .game-item:hover { transform: scale(1.03); border-color: var(--vavada-pink); }
+        .game-item img { width: 100%; height: auto; display: block; }
+        .game-item .game-name { padding: 12px; font-weight: 800; font-size: 0.9rem; text-transform: uppercase; }
 
-        #chat-window {
-            position: fixed;
-            bottom: 110px;
-            right: 30px;
-            width: 320px;
-            height: 450px;
-            background: #1a1a1a;
-            border-radius: 20px;
-            display: none;
-            flex-direction: column;
-            border: 1px solid #333;
-            z-index: 9999;
-            box-shadow: var(--card-shadow);
+        /* --- FOOTER & LOGOS --- */
+        footer { margin-top: 80px; padding: 60px 20px; background: #080310; text-align: center; }
+        .footer-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 35px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
         }
+        .mga-logo { height: 35px; }
+        .bga-logo { height: 30px; background: white; padding: 4px; border-radius: 4px; }
+        .copyright { color: #555; font-size: 0.8rem; line-height: 1.6; }
 
-        .chat-header { background: var(--vavada-purple); padding: 15px; border-radius: 20px 20px 0 0; display: flex; justify-content: space-between; }
-        #chat-msgs { flex: 1; padding: 15px; overflow-y: auto; font-size: 0.9rem; }
-        .msg { margin-bottom: 12px; border-bottom: 1px solid #222; padding-bottom: 5px; }
-        .user { color: var(--vavada-pink); font-weight: 700; margin-right: 5px; }
-
-        /* FOOTER */
-        footer { margin-top: 80px; text-align: center; padding: 40px; background: rgba(0,0,0,0.3); }
-        .trust-icons { display: flex; justify-content: center; gap: 30px; align-items: center; flex-wrap: wrap; opacity: 0.7; }
-        .mga-logo { height: 40px; }
+        /* --- CHAT --- */
+        #chat-icon {
+            position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px;
+            background: var(--vavada-pink); border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; cursor: pointer; z-index: 1000;
+        }
+        #chat-box {
+            position: fixed; bottom: 95px; right: 25px; width: 300px; height: 400px;
+            background: #111; border-radius: 15px; display: none; flex-direction: column;
+            border: 1px solid #333; z-index: 1000; overflow: hidden;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <div class="logo">VAVADA <span>PROTOS AI</span></div>
-        <img src="https://upload.wikimedia.org/wikipedia/en/1/12/Flag_of_Poland.svg" class="flag-pl" alt="Poland">
+        <div class="logo">VAVADA<span>PROTOS AI</span></div>
+        <div class="flag-wave"></div>
     </header>
 
     <div id="step1" class="step-content active">
-        <h1 style="font-size: 3rem; margin-bottom: 10px;">🤖 <b>PROTOS AI v4.2</b></h1>
-        <h2 style="color: var(--vavada-pink);">Połączenie nawiązane.</h2>
-        <p class="hero-desc">Nasz system analizuje luki w algorytmach kasynowych przy użyciu sieci neuronowych. <br>Monitorujemy 140+ systemów для zapewnienia 94.8% skuteczności.</p>
+        <h1 style="font-size: 2.5rem;">🤖 <b>PROTOS AI v4.2</b></h1>
+        <h2 style="color: var(--vavada-pink); margin-top: -10px;">Połączenie nawiązane.</h2>
+        <p style="opacity: 0.8; max-width: 700px; margin: 0 auto 30px;">Nasz system analizuje luki w algorytmach przy użyciu sieci neuronowych PROTOS.</p>
         
         <button class="btn-main" onclick="goToStep(2)">Dołącz do zespołu</button>
 
-        <div style="margin-top: 50px; text-align: left;">
-            <h3 style="color: var(--vavada-gold)">🏆 Победители naszej команды:</h3>
-            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px;">
-                <div><b>Krzysztof_PL:</b> 12,450 PLN</div>
-                <div style="margin-top: 10px;"><b>Alicja_Wwa:</b> 7,800 PLN</div>
-                <div style="margin-top: 10px;"><b>Bobi_Zwyciezca:</b> 19,200 PLN</div>
+        <div class="winners-box">
+            <h3 style="text-align: center;">🏆 Zwycięzcy naszej drużyny</h3>
+            <div class="winner-grid">
+                <div class="winner-card">
+                    <img src="https://i.pravatar.cc/100?u=153">
+                    <div><span>ID: 153**012</span><b>12,450 PLN</b></div>
+                </div>
+                <div class="winner-card">
+                    <img src="https://i.pravatar.cc/100?u=154">
+                    <div><span>ID: 154**882</span><b>8,900 PLN</b></div>
+                </div>
+                <div class="winner-card">
+                    <img src="https://i.pravatar.cc/100?u=155">
+                    <div><span>ID: 155**331</span><b>24,200 PLN</b></div>
+                </div>
+                <div class="winner-card">
+                    <img src="https://i.pravatar.cc/100?u=1535">
+                    <div><span>ID: 153**445</span><b>6,700 PLN</b></div>
+                </div>
+                <div class="winner-card">
+                    <img src="https://i.pravatar.cc/100?u=1542">
+                    <div><span>ID: 154**901</span><b>15,300 PLN</b></div>
+                </div>
+                <div class="winner-card">
+                    <img src="https://i.pravatar.cc/100?u=1556">
+                    <div><span>ID: 155**229</span><b>31,050 PLN</b></div>
+                </div>
             </div>
         </div>
     </div>
 
     <div id="step2" class="step-content">
-        <h2 style="color: var(--vavada-pink)">⚠️ Konto nieaktywne!</h2>
-        <p>Aby AI zaczęło generować sygnały, musisz zarejestrować się i zasilić saldo (min. 75 PLN).</p>
-        <button class="btn-main" onclick="window.open('https://vavada.com/pl/')">🔗 REJESTRACJA (PROTOS AI)</button>
-        <div style="margin-top: 30px;">
-            <p>Wpisz swoje ID (10 cyfr):</p>
-            <input type="text" id="idInput" placeholder="ID Gracza" maxlength="10">
+        <h2 style="color: var(--vavada-pink);">⚠️ Konto nieaktywne!</h2>
+        <p>Musisz posiadać zarejestrowane konto (ID: 10 cyfr) i balans min. 75 PLN.</p>
+        <button class="btn-main" style="background: #222; font-size: 1rem;" onclick="window.open('https://vavada.com/pl/')">🔗 REJESTRACJA (PROTOS AI)</button>
+        <div style="margin-top: 40px;">
+            <p>Podaj swoje ID:</p>
+            <input type="text" id="idIn" placeholder="1234567890" maxlength="10" style="padding: 15px; border-radius: 8px; border: none; width: 200px; text-align: center;">
             <br><br>
-            <button class="btn-main" style="padding: 12px 30px; font-size: 1rem;" onclick="checkID()">Potwierdź ID</button>
+            <button class="btn-main" onclick="checkID()">Potwierdź</button>
         </div>
     </div>
 
     <div id="step3" class="step-content">
-        <h2>💰 Aktywacja depozytu</h2>
-        <p>Wgraj screena z saldem (minimum 75 PLN), aby połączyć się z siecią neuronową.</p>
-        <input type="file" id="screenshot" style="margin: 20px 0;">
+        <h2>💰 Weryfikacja balansu</h2>
+        <p>Prześlij zrzut ekranu konta z kwotą <b>75 PLN</b> lub więcej.</p>
+        <input type="file" id="f" style="margin: 20px 0;">
         <br>
-        <button class="btn-main" onclick="verifyDeposit()">Weryfikuj</button>
+        <button class="btn-main" onclick="verify()">Aktywuj AI</button>
     </div>
 
     <div id="step4" class="step-content">
-        <h2>🚀 Wybierz grę</h2>
+        <h2>🎮 Wybierz grę</h2>
         <div class="games-grid">
-            <div class="game-card" onclick="openGame('Aviator')">
-                <img src="https://i.ibb.co/LhbV4P5/aviator.jpg" alt="Aviator">
-                <div class="title">AVIATOR</div>
+            <div class="game-item" onclick="openGame('Aviator')">
+                <img src="https://img-a.vavada-cdn.net/MQqyzUi16QUy1sDrir4o0kBNH_YKDtGGkuJVcFXzym8/rs:fill/w:232/h:174/bG9jYWw6Ly8vMS82/LzE2YjI4MDg0YmI1/ZTVlMDU4NDU2YzVi/ZTA1ZTJjZmU5ODVk/NGQ0YzMucG5n.jpeg">
+                <div class="game-name">Aviator</div>
             </div>
-            <div class="game-card" onclick="openGame('Mines')">
-                <img src="https://i.ibb.co/pLgDkM6/mines.jpg" alt="Mines">
-                <div class="title">MINES AI</div>
+            <div class="game-item" onclick="openGame('Mines')">
+                <img src="https://img-a.vavada-cdn.net/-F9un96-x1beV9Q3Z--_RrHfndfaV-3T5slHs06xzB4/rs:fill/w:232/h:174/bG9jYWw6Ly8vOS85/Lzk5NDA4OGUzOWQx/YmNjYWM5ODE1Y2Vi/OTc1MzRlZGQwMjJi/NThhNjkucG5n.jpeg">
+                <div class="game-name">Mines AI</div>
             </div>
-            <div class="game-card" onclick="openGame('Penalty')">
-                <img src="https://i.ibb.co/r7v9tN7/penalty.jpg" alt="Penalty">
-                <div class="title">PENALTY UNLIMITED</div>
+            <div class="game-item" onclick="openGame('Penalty')">
+                <img src="https://img-a.vavada-cdn.net/3KkQgmKpf-bM5cKgzNcKsvIiqgXF7i0EboyqpAnZjOk/rs:fill/w:232/h:174/bG9jYWw6Ly8vOC8x/LzgxMjlhOWE4Njkz/ZTMzYjczNGE1MGI1/ODhhMjc2ZTVlMjFm/ZGUxYTIuanBn.jpeg">
+                <div class="game-name">Penalty</div>
             </div>
-            <div class="game-card" onclick="openGame('Chicken')">
-                <img src="https://i.ibb.co/mS1sM7X/chicken.jpg" alt="Chicken Road">
-                <div class="title">CHICKEN ROAD</div>
+            <div class="game-item" onclick="openGame('Chicken')">
+                <img src="https://img-a.vavada-cdn.net/jmo-Ere_Ld6xNGmWV9-hCc9w87VOULwKgdp7DWa4bx0/rs:fill/w:232/h:174/bG9jYWw6Ly8vZS8w/L2UwMDIyNzJhNTNk/ZTE4YTZmYjU0YTli/MDQ0MmQ0NTgyMTQ0/ODhjNWEuanBn.jpeg">
+                <div class="game-name">Chicken Road</div>
             </div>
         </div>
     </div>
 
     <div id="step5" class="step-content">
-        <h2 id="gameNameDisplay">Sygnał</h2>
-        <div class="prediction-box" id="predictionResult">
-            </div>
-        <button class="btn-main" onclick="getNewSignal()">Pobierz nowy sygnał</button>
-        <p onclick="goToStep(4)" style="cursor:pointer; margin-top:20px; opacity:0.5;">⬅ Powrót do menu</p>
+        <h2 id="gn">GRA</h2>
+        <div id="res" style="background: rgba(255,255,255,0.05); padding: 50px; border-radius: 20px; font-size: 3rem; color: var(--vavada-gold); font-weight: 900;">...</div>
+        <br>
+        <button class="btn-main" onclick="gen()">Generuj Sygnał</button>
+        <p onclick="goToStep(4)" style="cursor:pointer; opacity:0.4; margin-top:20px;">⬅ Powróт</p>
     </div>
 
     <footer>
-        <div class="trust-icons">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/MGA_Logo.png" class="mga-logo" alt="MGA">
-            <img src="https://www.begambleaware.org/sites/default/files/2020-07/BGA_Logo_0.png" height="30" alt="BeGambleAware">
-            <span><b>BLIK</b></span>
-            <span><b>VISA / MC</b></span>
-            <span>🔞 18+</span>
+        <div class="footer-logos">
+            <img src="https://www.mga.org.mt/wp-content/uploads/logo-white.svg" class="mga-logo">
+            <img src="https://www.begambleaware.org/sites/default/files/2020-07/BGA_Logo_0.png" class="bga-logo">
+            <span style="font-weight: 900; font-size: 1.4rem;">BLIK</span>
+            <span style="border: 2px solid white; padding: 5px 8px; border-radius: 5px; font-weight: 900;">18+</span>
+        </div>
+        <div class="copyright">
+            © 2026 PROTOS AI: System VIP. Wszystkie prawa zastrzeżone. Graj odpowiedzialnie. <br>
+            Algorytmy PROTOS AI są chronione prawem autorskim. Sukces zależy od stabilności połączenia z serwerem.
         </div>
     </footer>
 </div>
 
-<div id="chat-trigger" onclick="toggleChat()">💬</div>
-<div id="chat-window">
-    <div class="chat-header">
-        <span>VIP Chat (Poland)</span>
-        <span onclick="toggleChat()" style="cursor:pointer;">✖</span>
+<div id="chat-icon" onclick="tC()">💬</div>
+<div id="chat-box">
+    <div style="background: var(--vavada-purple); padding: 12px; font-weight: 900; display:flex; justify-content:space-between;">
+        <span>VIP CHAT PL</span> <span onclick="tC()" style="cursor:pointer">✖</span>
     </div>
-    <div id="chat-msgs"></div>
+    <div id="msgs" style="flex:1; padding: 10px; overflow-y:auto; font-size:0.8rem;"></div>
 </div>
 
 <script>
@@ -262,76 +287,41 @@
     }
 
     function checkID() {
-        if(document.getElementById('idInput').value.length === 10) goToStep(3);
+        if(document.getElementById('idIn').value.length === 10) goToStep(3);
         else alert("ID musi mieć 10 cyfr!");
     }
 
-    function verifyDeposit() {
-        if(document.getElementById('screenshot').files.length > 0) {
-            alert("Analiza AI... Depozyt potwierdzony (PLN). Witamy w zespole!");
+    function verify() {
+        if(document.getElementById('f').files.length > 0) {
+            alert("Analiza danych... Wykryto balans 75 PLN+. Dostęp przyznany.");
             goToStep(4);
             startChat();
         } else alert("Wgraj screena!");
     }
 
-    let activeGame = '';
-    function openGame(name) {
-        activeGame = name;
-        document.getElementById('gameNameDisplay').innerText = name;
-        getNewSignal();
-        goToStep(5);
-    }
+    let currentG = '';
+    function openGame(n) { currentG = n; document.getElementById('gn').innerText = n; gen(); goToStep(5); }
 
-    function getNewSignal() {
-        const box = document.getElementById('predictionResult');
-        box.innerHTML = "Analiza algorytmu...";
-        
+    function gen() {
+        const r = document.getElementById('res'); r.innerText = "Analiza...";
         setTimeout(() => {
-            if(activeGame === 'Aviator') {
-                const val = (Math.random() * (1.6 - 1.1) + 1.1).toFixed(2);
-                box.innerHTML = `<h1 style="font-size:4rem; color:var(--vavada-gold)">x${val}</h1><p>Wypłać na tym kursie!</p>`;
-            } 
-            else if(activeGame === 'Mines') {
-                let grid = `<div class="mines-grid">`;
-                for(let i=0; i<25; i++) {
-                    const isSafe = Math.random() > 0.8;
-                    grid += `<div class="mine-cell ${isSafe?'safe':''}"></div>`;
-                }
-                grid += `</div><p>Klikaj w zaznaczone pola!</p>`;
-                box.innerHTML = grid;
-            }
-            else if(activeGame === 'Penalty') {
-                const dirs = ['LEWO', 'ŚRODEK', 'PRAWO'];
-                const dir = dirs[Math.floor(Math.random()*3)];
-                box.innerHTML = `<h2 style="color:var(--vavada-gold)">STRZELAJ: ${dir}</h2><p>Moc: 65%</p>`;
-            }
-            else {
-                box.innerHTML = `<h2>Rząd 1: Lewo<br>Rząd 2: Środek<br>Rząd 3: Prawo</h2>`;
-            }
-        }, 1500);
+            if(currentG==='Aviator') r.innerText = 'x' + (Math.random()*(1.45-1.15)+1.15).toFixed(2);
+            else if(currentG==='Mines') r.innerHTML = '💎 POLA: <br> 3, 7, 14, 21';
+            else if(currentG==='Penalty') r.innerText = 'CENTRALNIE';
+            else r.innerText = 'LEWA ŚCIEŻKA (x1.35)';
+        }, 1200);
     }
 
-    function toggleChat() {
-        const win = document.getElementById('chat-window');
-        win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
-    }
+    function tC() { const b = document.getElementById('chat-box'); b.style.display = b.style.display === 'flex' ? 'none' : 'flex'; }
 
     function startChat() {
-        const msgs = [
-            {u:"Marek_Wwa", t:"Siadło x1.45 na Aviatorze! Dzięki PROTOS!"},
-            {u:"Kasia_Casino", t:"Mines AI to czyste złoto dzisiaj."},
-            {u:"Admin_PL", t:"Pamiętajcie, żeby nie grać zbyt agresywnie."},
-            {u:"Pro_Gamer", t:"Czy Penalty też tak dobrze u was działa?"},
-            {u:"Zwyciezca", t:"Kolejne 300 PLN na koncie. Pozdro!"}
-        ];
+        const text = ["Super wynik!", "Aviator x1.20 wleciało", "Działa u kogoś?", "Tak, u mnie git", "Mines AI daje radę", "Zarobione 150 PLN!"];
         setInterval(() => {
-            const m = msgs[Math.floor(Math.random()*msgs.length)];
-            const div = document.createElement('div');
-            div.className = 'msg';
-            div.innerHTML = `<span class="user">${m.u}:</span> ${m.t}`;
-            const chat = document.getElementById('chat-msgs');
-            chat.prepend(div);
-        }, 4000);
+            const d = document.createElement('div');
+            d.innerHTML = `<b style="color:var(--vavada-pink)">Użytkownik_${Math.floor(Math.random()*999)}:</b> ${text[Math.floor(Math.random()*text.length)]}`;
+            d.style.marginBottom = "8px";
+            document.getElementById('msgs').prepend(d);
+        }, 4500);
     }
 </script>
 
